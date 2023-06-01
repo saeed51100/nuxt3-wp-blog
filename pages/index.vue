@@ -11,7 +11,7 @@ useHead({
   ],
   titleTemplate: "Elon's Blog - %s",
 });
-const { data: blogs, refresh, error } = await useWpApi().getPosts();
+const { data: posts, refresh, error } = await useWpApi().getPosts();
 </script>
 <template>
   <main>
@@ -59,12 +59,12 @@ const { data: blogs, refresh, error } = await useWpApi().getPosts();
       <div class="container py-10">
         <div class="grid sm:grid-cols-3 gap-10">
           <BlogGrid
-            v-for="blog in blogs"
-            :key="blog.id"
-            :title="blog.title.rendered"
-            :image="blog._embedded['wp:featuredmedia'][0]?.source_url"
-            :excerpt="blog.excerpt.rendered"
-            :slug="blog.slug"
+            v-for="post in posts"
+            :key="post.id"
+            :title="post.title.rendered"
+            :image="post._embedded['wp:featuredmedia'] ? post._embedded['wp:featuredmedia'][0].source_url : ' '"
+            :excerpt="post.excerpt.rendered"
+            :slug="post.slug"
           ></BlogGrid>
         </div>
       </div>
